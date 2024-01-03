@@ -1,0 +1,16 @@
+﻿@model IEnumerable<AspExos.Models.Message>
+
+<div class="flex-lg-row">
+    @foreach (var message in Model)
+    {
+        <p class="flex-lg-column">
+            @message.Emetteur
+            @message.Contenu
+            @message.Date
+        </p>
+    }
+</div>
+
+<div>
+    <a asp-action="Index">Retour</a>
+</div>
