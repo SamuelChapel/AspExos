@@ -1,0 +1,40 @@
+﻿@model AspExos.Models.Message
+
+@{
+    ViewData["Title"] = "Message";
+}
+
+<h1>Ajout de Message</h1>
+
+<h4>Message</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SendMessageForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Emetteur" class="control-label"></label>
+                <input asp-for="Emetteur" class="form-control" />
+                <span asp-validation-for="Emetteur" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contenu" class="control-label"></label>
+                <input asp-for="Contenu" class="form-control" />
+                <span asp-validation-for="Contenu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" type="date"/>
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Retour</a>
+</div>
+
