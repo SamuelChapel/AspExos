@@ -5,6 +5,9 @@ namespace AspExos.Controllers;
 
 public class MessageController(ILogger<MessageController> logger) : Controller
 {
+    private static int _nextId = 1;
+    private static int nextId => _nextId++;
+
     private static readonly List<Message> messages = [];
 
     private readonly ILogger<MessageController> _logger = logger;
@@ -16,7 +19,7 @@ public class MessageController(ILogger<MessageController> logger) : Controller
     }
 
     [HttpGet]
-    public IActionResult Form()
+    public IActionResult Create()
     {
         return View();
     }
@@ -24,27 +27,30 @@ public class MessageController(ILogger<MessageController> logger) : Controller
     [HttpPost]
     public IActionResult Form(string emetteur, string contenu, DateOnly date)
     {
-        var message = new Message(emetteur, contenu, date);
-        messages.Add(new Message(emetteur, contenu, date));
-        _logger.LogInformation($"Message ajouté : {message}");
+        var message = new Message(nextId, emetteur, contenu, date);
+        messages.Add(message);
+        _logger.LogInformation("Message ajouté : {message}", message);
+        TempData["message"] = "Message bien ajouté";
 
-        return RedirectToAction("Form");
+        return RedirectToAction(nameof(Create));
     }
 
     [HttpGet]
-    public IActionResult FormMessage()
+    public IActionResult CreateMessage()
     {
         return View();
     }
 
     [HttpPost]
-    public IActionResult MessageForm(Message message)
+    public IActionResult CreateMessage(Message message)
     {
+        message.Id = nextId;
         messages.Add(message);
 
-        _logger.LogInformation($"Message ajouté : {message}");
+        _logger.LogInformation("Message ajouté : {message}", message);
+        TempData["message"] = "Message bien ajouté";
 
-        return RedirectToAction("MessageForm");
+        return RedirectToAction(nameof(CreateMessage));
     }
 
     [HttpGet]
@@ -53,9 +59,22 @@ public class MessageController(ILogger<MessageController> logger) : Controller
         return View(messages);
     }
 
+    [HttpGet]
+    public IActionResult GetMessage(int id)
+    {
+        return View(messages.FirstOrDefault(m => m.Id == id));
+    }
+
+    [HttpGet]
+    public IActionResult ListStringForm()
+    {
+        return View();
+    }
+
     [HttpPost]
     public IActionResult ListStringForm(List<string> stringList)
     {
+        _logger.LogInformation("Liste de chaîne de caractères : {listString}", string.Join('\n', stringList));
         return View();
     }
 }

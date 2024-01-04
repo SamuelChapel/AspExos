@@ -1,0 +1,21 @@
+﻿@model AspExos.Models.Message
+
+<h1>Message</h1>
+
+<div class="flex-lg-row">
+    @if(@Model != null)
+    {
+        <p>Id : @Model.Id</p>
+        <p>Emetteur : @Model.Emetteur</p>
+        <p>Contenu : @Model.Contenu</p>
+        <p>Date : @Model.Date</p>
+    }
+    else
+    {
+        <p>Message invalide</p>
+    }
+</div>
+
+<div>
+    <a asp-action="Index">Retour</a>
+</div>

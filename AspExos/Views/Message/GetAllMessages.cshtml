@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<AspExos.Models.Message>
 
+<h1>Tous les messages</h1>
+
 <div class="flex-lg-row">
     @foreach (var message in Model)
     {
@@ -7,6 +9,7 @@
             @message.Emetteur
             @message.Contenu
             @message.Date
+            <a asp-action="GetMessage" asp-route-id="@message.Id">Detail</a>
         </p>
     }
 </div>

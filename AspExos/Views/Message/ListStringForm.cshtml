@@ -8,19 +8,24 @@
         <form asp-action="ListStringForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Emetteur" class="control-label"></label>
-                <input asp-for="Emetteur" class="form-control" />
-                <span asp-validation-for="Emetteur" class="text-danger"></span>
+                <label class="control-label">string 1</label>
+                <input type="text" class="form-control" name="stringList" />
+                <span class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Contenu" class="control-label"></label>
-                <input asp-for="Contenu" class="form-control" />
-                <span asp-validation-for="Contenu" class="text-danger"></span>
+                <label class="control-label">string 2</label>
+                <input type="text" class="form-control" name="stringList" />
+                <span class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" type="date" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+                <label class="control-label">string 3</label>
+                <input type="text" class="form-control" name="stringList" />
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">string 4</label>
+                <input type="text" class="form-control" name="stringList" />
+                <span class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
