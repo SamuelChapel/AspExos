@@ -1,14 +1,17 @@
 ﻿using AspExos.Models;
+using Bogus;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspExos.Controllers;
 
 public class MessageController(ILogger<MessageController> logger) : Controller
 {
-    private static int _nextId = 1;
-    private static int nextId => _nextId++;
+    private static int _currentId = 1;
+    private static int NextId => _currentId++;
 
-    private static readonly List<Message> messages = [];
+    private static readonly List<Message> messages = Enumerable.Range(0, 20)
+        .Select(i => GetRandomMessage())
+        .ToList();
 
     private readonly ILogger<MessageController> _logger = logger;
 
@@ -25,9 +28,9 @@ public class MessageController(ILogger<MessageController> logger) : Controller
     }
 
     [HttpPost]
-    public IActionResult Form(string emetteur, string contenu, DateOnly date)
+    public IActionResult Create(string emetteur, string contenu, DateOnly date)
     {
-        var message = new Message(nextId, emetteur, contenu, date);
+        var message = new Message(NextId, emetteur, contenu, date);
         messages.Add(message);
         _logger.LogInformation("Message ajouté : {message}", message);
         TempData["message"] = "Message bien ajouté";
@@ -44,7 +47,7 @@ public class MessageController(ILogger<MessageController> logger) : Controller
     [HttpPost]
     public IActionResult CreateMessage(Message message)
     {
-        message.Id = nextId;
+        message.Id = NextId;
         messages.Add(message);
 
         _logger.LogInformation("Message ajouté : {message}", message);
@@ -76,5 +79,15 @@ public class MessageController(ILogger<MessageController> logger) : Controller
     {
         _logger.LogInformation("Liste de chaîne de caractères : {listString}", string.Join('\n', stringList));
         return View();
+    }
+
+    public static Message GetRandomMessage()
+    {
+        return new Faker<Message>()
+            .RuleFor(m => m.Id, NextId)
+            .RuleFor(m => m.Emetteur, f => f.Person.FullName)
+            .RuleFor(m => m.Contenu, f => f.Lorem.Paragraph(1))
+            .RuleFor(m => m.Date, f => f.Date.PastDateOnly())
+            .Generate();
     }
 }

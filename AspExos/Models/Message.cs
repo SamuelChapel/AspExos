@@ -1,6 +1,8 @@
-﻿namespace AspExos.Models;
+﻿using Location.Entities.Base;
 
-public class Message
+namespace AspExos.Models;
+
+public class Message : IEntity<int>
 {
     public int Id { get; set; }
     public string Emetteur { get; set; } = null!;
