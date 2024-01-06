@@ -1,0 +1,30 @@
+﻿@model Message
+
+@{
+    ViewData["Title"] = "Modifier Message";
+}
+
+<h4 class="text-center">Modification du Message</h4>
+
+<form asp-action="EditMessage" class="w-75">
+    <div class="form-group">
+        <label class="control-label"></label>
+        <input class="form-control" name="emetteur" value="@Model?.Emetteur" />
+        <span class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="control-label"></label>
+        <textarea class="form-control" name="contenu" rows="3">@Model?.Contenu</textarea>
+        <span class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="control-label"></label>
+        <input class="form-control" type="date" name="date" value="@Model?.Date.ToShortDateString()" />
+        <span class="text-danger"></span>
+    </div>
+    <div class="d-flex justify-content-evenly mt-4">
+        <input type="submit" value="Valider" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Retour</a>
+    </div>
+</form>
+

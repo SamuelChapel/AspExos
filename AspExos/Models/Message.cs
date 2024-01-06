@@ -1,4 +1,5 @@
-﻿using Location.Entities.Base;
+﻿using Bogus;
+using Location.Entities.Base;
 
 namespace AspExos.Models;
 
@@ -24,5 +25,24 @@ public class Message : IEntity<int>
     public override string ToString()
     {
         return $"{Id} {Emetteur} {Contenu} {Date}";
+    }
+
+    public static Message GetRandomMessage()
+    {
+        return new Faker<Message>()
+            .RuleFor(m => m.Emetteur, f => f.Person.FullName)
+            .RuleFor(m => m.Contenu, f => f.Lorem.Paragraph(1))
+            .RuleFor(m => m.Date, f => f.Date.PastDateOnly())
+            .Generate();
+    }
+
+    public static IEnumerable<Message> GetRandomMessages(int count, int start = 1)
+    {
+        return Enumerable.Range(start, count).Select(i => new Faker<Message>()
+            .RuleFor(m => m.Id, i)
+            .RuleFor(m => m.Emetteur, f => f.Person.FullName)
+            .RuleFor(m => m.Contenu, f => f.Lorem.Paragraph(1))
+            .RuleFor(m => m.Date, f => f.Date.PastDateOnly())
+            .Generate());
     }
 };

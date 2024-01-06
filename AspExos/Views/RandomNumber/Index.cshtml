@@ -1,4 +1,22 @@
 ﻿
-<button asp-action=""></button>
+<button onclick="ReloadRandomNumber()">Random</button>
 
-<vc:random-number min="10" max="20"></vc:random-number>
+<div id="random-number-container">
+
+</div>
+@* <vc:random-number min="10" max="20"></vc:random-number> *@
+
+<script>
+
+    function ReloadRandomNumber() {
+            $.ajax({
+                type: "GET",
+                url: "RandomNumber/GetRandomComponent",
+                success: function (data) {
+                    const div = document.querySelector("#random-number-container");
+
+                    div.innerHTML = data;
+                }
+            })
+    }
+</script>

@@ -9,8 +9,14 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=AspExosDb;Integrated Security=True");
-
+        optionsBuilder.UseSqlServer("Data Source=MSI; Initial Catalog=AspExos; Integrated Security=SSPI; TrustServerCertificate=True");
+        //optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=AspExos;Integrated Security=True");
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Message>().HasData(Message.GetRandomMessages(100));
+    }
 }

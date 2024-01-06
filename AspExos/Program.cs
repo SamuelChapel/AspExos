@@ -1,30 +1,33 @@
-using AspExos.Services;
+using AspExos.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddControllersWithViews();
-
-builder.Services.AddScoped<IRandomService, RandomService>();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error404Page");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+	builder.Services.AddControllersWithViews();
+	builder.Services.AddServices();
 }
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
+var app = builder.Build();
+{
+	// Configure the HTTP request pipeline.
+	if (!app.Environment.IsDevelopment())
+	{
+		app.UseExceptionHandler("/error");
+		// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+		app.UseHsts();
+	}
 
-app.UseRouting();
+	app.UseRedirect404();
 
-app.UseAuthorization();
+	app.UseHttpsRedirection();
+	app.UseStaticFiles();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+	app.UseRouting();
 
-app.Run();
+	app.UseAuthorization();
+
+	app.MapControllerRoute(
+		name: "default",
+		pattern: "{controller=Home}/{action=Index}/{id?}");
+
+	app.Run();
+}

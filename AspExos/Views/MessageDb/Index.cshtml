@@ -1,0 +1,21 @@
+﻿@model List<Message>
+
+@{
+    ViewData["Title"] = "MessageBDD";
+}
+
+@section nav
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="MessageDb" asp-action="Index">Index</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="MessageDb" asp-action="Create">Créer Message</a>
+    </li>
+}
+
+<h1>Messages</h1>
+
+<div id="message-page-container">
+    <vc:messages-table messages="@Model"></vc:messages-table>
+</div>
