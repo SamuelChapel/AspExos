@@ -19,9 +19,17 @@ public class MessageDbController : Controller
     }
 
     [HttpGet]
-    public IActionResult Create()
+    public IActionResult CreateMessage()
     {
         return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateMessage(Message message)
+    {
+        int createdMessageId = await _messageRepository.Create(message);
+
+        return RedirectToAction("GetMessage", new { id = createdMessageId });
     }
 
     [HttpGet]
@@ -33,9 +41,14 @@ public class MessageDbController : Controller
     }
 
     [HttpGet]
-    public IActionResult GetMessage(int id)
+    public async Task<IActionResult> GetMessage(int id)
     {
-        return ViewComponent("MessageDetails", id);
+        var message = await _messageRepository.GetById(id);
+
+        if (message is null)
+            return View("Error404");
+
+        return View(message);
     }
 
     [HttpGet]

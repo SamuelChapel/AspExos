@@ -1,0 +1,29 @@
+﻿@model Message
+
+@{
+    ViewData["Title"] = "Ajout Message";
+}
+
+<h4 class="text-center">Création d'un Message</h4>
+
+<form asp-action="CreateMessage">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Emetteur" class="control-label"></label>
+        <input asp-for="Emetteur" class="form-control" required />
+        <span asp-validation-for="Emetteur" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Contenu" class="control-label"></label>
+        <input asp-for="Contenu" class="form-control" required />
+        <span asp-validation-for="Contenu" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Date" class="control-label"></label>
+        <input asp-for="Date" class="form-control" type="date" required />
+        <span asp-validation-for="Date" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Valider" class="btn btn-primary" />
+    </div>
+</form>
