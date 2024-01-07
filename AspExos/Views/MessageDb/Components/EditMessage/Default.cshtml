@@ -9,17 +9,27 @@
 <form asp-action="EditMessage" class="w-75">
     <div class="form-group">
         <label class="control-label"></label>
-        <input class="form-control" name="emetteur" value="@Model?.Emetteur" />
+        <input class="form-control"
+               name="emetteur"
+               value="@Model?.Emetteur"
+               required />
         <span class="text-danger"></span>
     </div>
     <div class="form-group">
         <label class="control-label"></label>
-        <textarea class="form-control" name="contenu" rows="3">@Model?.Contenu</textarea>
+        <textarea class="form-control"
+                  name="contenu"
+                  rows="3"
+                  required>@Model?.Contenu</textarea>
         <span class="text-danger"></span>
     </div>
     <div class="form-group">
         <label class="control-label"></label>
-        <input class="form-control" type="date" name="date" value="@Model?.Date.ToShortDateString()" />
+        <input class="form-control"
+               type="date"
+               name="date"
+               value="@Model?.Date.ToString("yyyy-MM-dd")"
+               required />
         <span class="text-danger"></span>
     </div>
     <div class="d-flex justify-content-evenly mt-4">

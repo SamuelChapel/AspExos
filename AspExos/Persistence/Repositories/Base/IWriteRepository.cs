@@ -23,5 +23,5 @@ public interface IWriteRepository<TEntity, TId> where TEntity : IEntity<TId>
     /// </summary>
     /// <param name="entity">The <typeparamref name="TEntity"/> to delete</param>
     /// <returns>The number of <typeparamref name="TEntity"/> deleted</returns>
-    Task Delete(TId id);
+    Task Delete(TEntity entity);
 }

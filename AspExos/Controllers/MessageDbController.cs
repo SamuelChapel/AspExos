@@ -43,7 +43,7 @@ public class MessageDbController : Controller
     {
         var message = await _messageRepository.GetById(id);
 
-        if (message == null)
+        if (message is null)
             return View("Error404");
 
         return View("EditMessage", message);
@@ -64,7 +64,7 @@ public class MessageDbController : Controller
 
         if (message is not null)
         {
-            await _messageRepository.Delete(id);
+            await _messageRepository.Delete(message);
         }
 
         return RedirectToAction("Index");
