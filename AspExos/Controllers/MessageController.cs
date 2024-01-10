@@ -9,7 +9,7 @@ public class MessageController(ILogger<MessageController> logger) : Controller
     private static int _currentId = 1;
     private static int NextId => _currentId++;
 
-    private static readonly List<Message> messages = Enumerable.Range(0, 20)
+    private static readonly List<Message> _messages = Enumerable.Range(0, 20)
         .Select(i => GetRandomMessage())
         .ToList();
 
@@ -31,7 +31,7 @@ public class MessageController(ILogger<MessageController> logger) : Controller
     public IActionResult Create(string emetteur, string contenu, DateOnly date)
     {
         var message = new Message(NextId, emetteur, contenu, date);
-        messages.Add(message);
+        _messages.Add(message);
         _logger.LogInformation("Message ajouté : {message}", message);
         TempData["message"] = "Message bien ajouté";
 
@@ -48,7 +48,7 @@ public class MessageController(ILogger<MessageController> logger) : Controller
     public IActionResult CreateMessage(Message message)
     {
         message.Id = NextId;
-        messages.Add(message);
+        _messages.Add(message);
 
         _logger.LogInformation("Message ajouté : {message}", message);
         TempData["message"] = "Message bien ajouté";
@@ -59,13 +59,13 @@ public class MessageController(ILogger<MessageController> logger) : Controller
     [HttpGet]
     public IActionResult GetAllMessages()
     {
-        return View(messages);
+        return View(_messages);
     }
 
     [HttpGet]
     public IActionResult GetMessage(int id)
     {
-        return View(messages.FirstOrDefault(m => m.Id == id));
+        return View(_messages.FirstOrDefault(m => m.Id == id));
     }
 
     [HttpGet]
@@ -89,5 +89,11 @@ public class MessageController(ILogger<MessageController> logger) : Controller
             .RuleFor(m => m.Contenu, f => f.Lorem.Paragraph(1))
             .RuleFor(m => m.Date, f => f.Date.PastDateOnly())
             .Generate();
+    }
+
+    public ActionResult VerifierEmetteur(string emetteur)
+    {
+        bool res = false; //traitement de contrôle
+        return Json(res);
     }
 }

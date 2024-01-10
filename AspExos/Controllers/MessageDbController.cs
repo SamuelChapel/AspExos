@@ -4,11 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AspExos.Controllers;
 
-public class MessageDbController : Controller
+public class MessageDbController(MessageRepository messageRepository) : Controller
 {
-    private readonly MessageRepository _messageRepository;
-
-    public MessageDbController(MessageRepository messageRepository) => _messageRepository = messageRepository;
+    private readonly MessageRepository _messageRepository = messageRepository;
 
     [HttpGet]
     public async Task<IActionResult> Index()
@@ -32,10 +30,18 @@ public class MessageDbController : Controller
         return RedirectToAction("GetMessage", new { id = createdMessageId });
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetMessagesTable()
+    [HttpPost]
+    public async Task<IActionResult> GetMessagesTable(string search)
     {
-        var messages = await _messageRepository.GetAll();
+        List<Message> messages;
+        if (search is null)
+        {
+            messages = await _messageRepository.GetAll();
+        }
+        else
+        {
+            messages = await _messageRepository.FindMessages(search);
+        }
 
         return ViewComponent("MessagesTable", messages);
     }

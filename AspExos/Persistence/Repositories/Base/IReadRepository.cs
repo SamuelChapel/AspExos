@@ -15,5 +15,5 @@ public interface IReadRepository<TEntity, TId> where TEntity : IEntity<TId>
     /// Method for getting all the <typeparamref name="TEntity"/> 
     /// </summary>
     /// <returns>returns an <typeparamref name="IEnumerable"/> of all the <typeparamref name="TEntity"/></returns>
-    Task<IEnumerable<TEntity>> GetAll();
+    Task<List<TEntity>> GetAll();
 }

@@ -4,6 +4,22 @@
     ViewData["Title"] = "MessageBDD";
 }
 
+@section scripts
+{
+    <script>
+        $(function () {
+            $('#formSearch').submit(function (e) {
+                console.log($('#searchField').val());
+                $.post('/MessageDb/GetMessagesTable', { search: $('#searchField').val() }, function (data) {
+                    $("#message-page-container").html(data);
+                });
+
+                e.preventDefault();
+            });
+        });
+    </script>
+}
+
 @section nav
 {
     <li class="nav-item">
@@ -15,6 +31,14 @@
 }
 
 <h1 class="text-center border-1 border-dark">Messages</h1>
+
+<div>
+    <form asp-action="GetMessagesTable" id="formSearch" class="m-3">
+        <label for="search">Recherche en ajax</label>
+        <input name="search" id="searchField" placeholder="Chercher l'emetteur.." />
+        <input type="submit" class="btn btn-secondary" />
+    </form>
+</div>
 
 <div id="message-page-container">
     <vc:messages-table messages="@Model"></vc:messages-table>

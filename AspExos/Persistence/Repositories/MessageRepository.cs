@@ -20,9 +20,16 @@ public class MessageRepository : IReadRepository<Message, int>, IWriteRepository
         return await _dbContext.Messages.FirstOrDefaultAsync(m => m.Id == id);
     }
 
-    public async Task<IEnumerable<Message>> GetAll()
+    public async Task<List<Message>> GetAll()
     {
         return await _dbContext.Messages.ToListAsync();
+    }
+
+    public async Task<List<Message>> FindMessages(string search)
+    {
+        return await _dbContext.Messages
+            .Where(m => m.Emetteur.Contains(search))
+            .ToListAsync();
     }
 
     public async Task<int> Create(Message message)

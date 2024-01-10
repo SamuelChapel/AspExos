@@ -19,21 +19,24 @@
                 <td>@message.Contenu</td>
                 <td>@message.Date.ToShortDateString()</td>
                 <td>
-                    <a asp-controller="MessageDb"
+                    <a class="btn btn-primary"
+                       asp-controller="MessageDb"
                        asp-action="GetMessage"
                        asp-route-id="@message.Id">
                         Détails
                     </a>
                 </td>
                 <td>
-                    <a asp-controller="MessageDb"
+                    <a class="btn btn-warning"
+                       asp-controller="MessageDb"
                        asp-action="EditMessage"
                        asp-route-id="@message.Id">
                         Editer
                     </a>
                 </td>
                 <td>
-                    <a asp-controller="MessageDb"
+                    <a class="btn btn-danger"
+                       asp-controller="MessageDb"
                        asp-action="DeleteMessage"
                        asp-route-id="@message.Id"
                        onclick="return confirm('Voulez-vous vraiment supprimer le message @message.Id ?');">
